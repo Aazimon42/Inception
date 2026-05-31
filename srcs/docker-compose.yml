@@ -5,7 +5,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress: /var/www/html
+      - wordpress:/var/www/html
     ports:
       - "443:443"
     restart: on-failure
@@ -16,7 +16,7 @@ services:
     networks:
       - inception
     volumes:
-      - mariadb: /var/lib/mysql
+      - mariadb:/var/lib/mysql
     ports:
       - "3306:3306"
     restart: on-failure
@@ -27,7 +27,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress: /run/php
+      - wordpress:/run/php
     ports:
       - "9000:9000"
     restart: on-failure
