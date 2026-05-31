@@ -1,0 +1,33 @@
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    networks:
+      - inception
+    volumes:
+      - wordpress: /var/www/html
+    ports:
+      - "443:443"
+    restart: on-failure
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb: /var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: on-failure
+  
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    networks:
+      - inception
+    volumes:
+      - wordpress: /run/php
+    ports:
+      - "9000:9000"
+    restart: on-failure
