@@ -7,6 +7,6 @@ COPY ./wordpress.conf /etc/php/8.2/fpm/pool.d
 
 # We make a copy of the script so it can be executed from the image
 COPY ./wordpress.sh /var/www/html
-RUN chmod +x wordpress.sh
+RUN chmod +x /var/www/html/wordpress.sh
 
 ENTRYPOINT ["/var/www/html/wordpress.sh"]
