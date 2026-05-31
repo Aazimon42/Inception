@@ -27,7 +27,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress:/run/php
+      - wordpress:/var/www/html
     ports:
       - "9000:9000"
     restart: on-failure
