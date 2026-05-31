@@ -31,3 +31,7 @@ services:
     ports:
       - "9000:9000"
     restart: on-failure
+
+networks:
+  inception:
+    driver: bridge
