@@ -6,7 +6,7 @@ RUN apt update -y && apt upgrade -y && apt install -y mariadb-server mariadb-cli
 COPY ./mariadb.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # We make a copy of the script so it can be executed from the image
-COPY ./mariadb.sh /var/lib/mysql
+COPY ./mariadb.sh /var/lib/mysql/
 RUN chmod +x /var/lib/mysql/mariadb.sh
 
 ENTRYPOINT ["/var/lib/mysql/mariadb.sh"]
