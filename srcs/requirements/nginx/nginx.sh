@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -f /etc/nginx/conf.d/nginx.conf ]; then
+if [ -f /etc/nginx/conf.d/nginx.conf.template ]; then
     envsubst < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/nginx.conf
 fi
 
