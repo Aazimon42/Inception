@@ -6,7 +6,7 @@ RUN apt update -y && apt upgrade -y && apt install -y mariadb-server mariadb-cli
 COPY ./mariadb.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN mkdir ./entrypoint-initdb.d
-COPY ./tools/init.sql.template /entrypoint-initdb.d
+COPY ./init.sql.template /entrypoint-initdb.d
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 # We make a copy of the script so it can be executed from the image
