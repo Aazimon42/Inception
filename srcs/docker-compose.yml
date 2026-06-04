@@ -28,6 +28,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
+    env_file: ../.env
     networks:
       - inception
     volumes:
