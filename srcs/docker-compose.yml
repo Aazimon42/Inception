@@ -30,6 +30,8 @@ services:
       - wordpress:/var/www/html
     ports:
       - "9000:9000"
+    depends_on:
+      - mariadb
     restart: on-failure
 
 networks:
