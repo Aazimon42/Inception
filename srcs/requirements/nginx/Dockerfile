@@ -13,4 +13,4 @@ WORKDIR /usr/local/bin/
 COPY ./nginx.sh .
 RUN chmod +x nginx.sh
 
-CMD ["/usr/local/bin/nginx.sh"]
+ENTRYPOINT ["/usr/local/bin/nginx.sh"]
