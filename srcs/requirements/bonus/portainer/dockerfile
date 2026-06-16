@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* \
+RUN apt update && apt install -y wget && rm -rf /var/lib/apt/lists/* \
  && wget -O /usr/local/bin/portainer https://github.com/portainer/portainer/releases/latest/download/portainer-linux-amd64 \
  && chmod +x /usr/local/bin/portainer
 
