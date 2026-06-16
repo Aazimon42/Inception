@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>edi-maio — 42 Student</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #666680;
+    --accent: #7c6af5;
+    --accent2: #3dd9a4;
+    --accent3: #f56a6a;
+    --glow: rgba(124, 106, 245, 0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,245,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,245,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  nav .inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .logo span { color: var(--accent2); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    padding: 7rem 0 5rem;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(124,106,245,0.08) 0%, transparent 70%);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    border: 1px solid rgba(61,217,164,0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .hero h1 .name { color: var(--text); }
+  .hero h1 .at { color: var(--muted); font-size: 0.6em; }
+  .hero h1 .school { color: var(--accent); }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero p .hl { color: var(--accent2); }
+
+  .btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: #9080ff; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+  /* SECTIONS */
+  section { padding: 4rem 0; border-top: 1px solid var(--border); }
+
+  .section-label {
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: #161620; }
+
+  .skill-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .skill-lvl {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .bar {
+    height: 2px;
+    background: var(--border);
+    margin-top: 0.8rem;
+    border-radius: 1px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+
+  /* PROJECTS */
+  .projects { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+
+  .project {
+    background: var(--surface);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .project:hover { background: #161620; }
+
+  .project-name {
+    font-size: 0.9rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .project-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+  .ptag {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ptag-c { background: rgba(245,106,106,0.12); color: var(--accent3); border: 1px solid rgba(245,106,106,0.2); }
+  .ptag-cpp { background: rgba(124,106,245,0.12); color: var(--accent); border: 1px solid rgba(124,106,245,0.2); }
+  .ptag-docker { background: rgba(61,217,164,0.12); color: var(--accent2); border: 1px solid rgba(61,217,164,0.2); }
+  .ptag-gd { background: rgba(250,200,80,0.12); color: #fac850; border: 1px solid rgba(250,200,80,0.2); }
+
+  /* TERMINAL */
+  .terminal {
+    background: #0d0d14;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    background: #1a1a24;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #27c93f; }
+
+  .terminal-title {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 2; }
+
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--muted); padding-left: 1rem; }
+  .t-hl { color: var(--accent2); }
+  .t-err { color: var(--accent3); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* CURSOR BLINK */
+  .cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  @media (max-width: 600px) {
+    .project { grid-template-columns: 1fr; }
+    nav ul { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="logo">edi<span>-maio</span>@42</div>
+    <ul>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="hero" style="border: none; padding-top: 6rem;">
+    <div class="tag">42 Angouleme — CommonCore</div>
+    <h1>
+      <div class="name">edi-maio</div>
+      <div><span class="at">student @</span> <span class="school">École 42</span></div>
+    </h1>
+    <div class="btns">
+      <a href="https://github.com/Aazimon42" class="btn btn-primary" target="_blank">github</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-label">whoami</div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="terminal-title">bash — 80×24</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">edi-maio@42:~$</span> <span class="t-cmd">cat about.txt</span></div>
+        <div class="t-out">name    : <span class="t-hl">edi-maio</span></div>
+        <div class="t-out">school  : <span class="t-hl">École 42 Angouleme</span></div>
+        <div class="t-out">rank    : <span class="t-hl">CommonCore</span></div>
+        <div class="t-out">focus   : <span class="t-hl">systems, graphics, game dev</span></div>
+        <div class="t-out">status  : <span class="t-err">[ STUDYING ]</span></div>
+        <div style="margin-top: 0.5rem;">
+          <span class="t-prompt">edi-maio@42:~$</span> <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">skills</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">C</div>
+        <div class="skill-lvl">avancé</div>
+        <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔷</div>
+        <div class="skill-name">C++</div>
+        <div class="skill-lvl">intermédiaire</div>
+        <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐳</div>
+        <div class="skill-name">Docker</div>
+        <div class="skill-lvl">intermédiaire</div>
+        <div class="bar"><div class="bar-fill" style="width:60%; background: var(--accent2)"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎮</div>
+        <div class="skill-name">Godot 4</div>
+        <div class="skill-lvl">en cours</div>
+        <div class="bar"><div class="bar-fill" style="width:50%; background: #fac850"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐧</div>
+        <div class="skill-name">Linux / Bash</div>
+        <div class="skill-lvl">avancé</div>
+        <div class="bar"><div class="bar-fill" style="width:80%; background: var(--accent2)"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Networking</div>
+        <div class="skill-lvl">intermédiaire</div>
+        <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">projets 42</div>
+    <div class="projects">
+      <div class="project">
+        <div>
+          <div class="project-name">inception</div>
+          <div class="project-desc">Infrastructure Docker multi-conteneurs — Nginx, WordPress, MariaDB, Redis, FTP, Adminer.</div>
+        </div>
+        <div class="project-tags">
+          <span class="ptag ptag-docker">docker</span>
+        </div>
+      </div>
+      <div class="project">
+        <div>
+          <div class="project-name">CPP modules</div>
+          <div class="project-desc">Série d'exercices C++ couvrant OOP, templates, exceptions, STL.</div>
+        </div>
+        <div class="project-tags">
+          <span class="ptag ptag-cpp">C++</span>
+        </div>
+      </div>
+      <div class="project">
+        <div>
+          <div class="project-name">cub3D</div>
+          <div class="project-desc">Moteur de raycasting en C avec MiniLibX. Textures, minimap, fisheye fix.</div>
+        </div>
+        <div class="project-tags">
+          <span class="ptag ptag-c">C</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">contact</div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="terminal-title">bash — contact</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">edi-maio@42:~$</span> <span class="t-cmd">cat contact.json</span></div>
+        <div class="t-out">{</div>
+        <div class="t-out">&nbsp;&nbsp;"github": <span class="t-hl">"github.com/edi-maio"</span>,</div>
+        <div class="t-out">&nbsp;&nbsp;"school": <span class="t-hl">"42Angouleme.fr"</span>,</div>
+        <div class="t-out">&nbsp;&nbsp;"login":  <span class="t-hl">"edi-maio"</span></div>
+        <div class="t-out">}</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    edi-maio · École 42 Angouleme · <span style="color: var(--accent);">2025</span>
+  </div>
+</footer>
+
+</body>
+</html>
