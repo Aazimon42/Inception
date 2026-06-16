@@ -1,8 +1,10 @@
 FROM debian:bookworm
 
-RUN apt update && apt install -y php php-mysqli wget && rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /var/www/adminer \
- && wget -O /var/www/adminer/index.php https://www.adminer.org/latest.php
+RUN apt update -y && apt upgrade -y && apt install -y php-fpm php-mysql wget
+RUN mkdir -p /var/www/html 
+RUN mkdir -p /run/php
+RUN wget -O /var/www/html/adminer.php https://github.com/vrana/adminer/releases/download/v5.4.1/adminer-5.4.1.php
 
-EXPOSE 8080
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/adminer"]
+COPY ./adminer.conf /etc/php/8.2/fpm/pool.d/www.conf
+
+CMD ["php-fpm8.2", "-F"]
