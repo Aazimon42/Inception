@@ -16,4 +16,8 @@ chmod +x wp-cli.phar
 ./wp-cli.phar plugin install redis-cache --activate --allow-root
 ./wp-cli.phar redis enable --allow-root
 
+# Permission for redis cache
+chown -R www-data:www-data /var/www/html
+chmod -R 775 /var/www/html
+
 exec php-fpm8.2 -F
