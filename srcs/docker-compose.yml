@@ -2,7 +2,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
-    env_file: ../.env
+    env_file: .env
     networks:
       - inception
     volumes:
@@ -14,7 +14,7 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
-    env_file: ../.env
+    env_file: .env
     networks:
       - inception
     volumes:
@@ -28,7 +28,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
-    env_file: ../.env
+    env_file: .env
     networks:
       - inception
     volumes:
@@ -51,7 +51,7 @@ services:
   ftp:
     container_name: ftp
     build: ./requirements/bonus/ftp
-    env_file: ../.env
+    env_file: .env
     networks:
       - inception
     volumes:
