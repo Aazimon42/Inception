@@ -10,4 +10,10 @@ chmod +x wp-cli.phar
 ./wp-cli.phar user create $WP_USER $WP_USER_MAIL --role=author --user_pass=$WP_USER_PASS --allow-root
 ./wp-cli.phar user set-role 2 editor --allow-root
 
+# Redis setup
+./wp-cli.phar config set WP_REDIS_HOST redis --type=constant --allow-root
+./wp-cli.phar config set WP_REDIS_PORT 6379 --raw --type=constant --allow-root
+./wp-cli.phar plugin install redis-cache --activate --allow-root
+./wp-cli.phar redis enable --allow-root
+
 exec php-fpm8.2 -F
