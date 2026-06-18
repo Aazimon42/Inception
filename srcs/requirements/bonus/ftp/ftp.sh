@@ -2,9 +2,9 @@
 
 mkdir -p /var/run/vsftpd/empty
 
-useradd -m -s /bin/bash $FTPUSER -d /var/www/html
-usermod -aG www-data $FTPUSER
+useradd -m -s /bin/bash $FTP_USER -d /var/www/html
+usermod -aG www-data $FTP_USER
 chmod g+s /var/www/html
-echo "$FTPUSER:$FTPPASS" | chpasswd
+echo "$FTP_USER:$FTP_PASS" | chpasswd
 
 exec vsftpd /etc/vsftpd.conf
