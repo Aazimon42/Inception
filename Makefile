@@ -6,11 +6,13 @@
 #    By: edi-maio <edi-maio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/16 14:17:15 by edi-maio          #+#    #+#              #
-#    Updated: 2026/06/16 14:17:56 by edi-maio         ###   ########.fr        #
+#    Updated: 2026/06/19 00:49:55 by edi-maio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=inception
+
+$(NAME): all
 
 all:
 	mkdir -p /home/edi-maio/data/wordpress \
@@ -18,10 +20,10 @@ all:
 	         /home/edi-maio/data/portainer
 	docker compose -f srcs/docker-compose.yml up -d --build
 
-down:
+stop:
 	docker compose -f srcs/docker-compose.yml down
 
-clean: down
+clean: stop
 	rm -rf /home/edi-maio/data
 
 fclean: clean
